@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>To-Do List</title>
-        <script src="vendors/jquery.min.js" charset="utf-8"></script>
-        <script src="scripts/client.js" charset="utf-8"></script>
-        <link rel="stylesheet" href="/css/style.css">
-    </head>
-    <body>
 
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>To-Do List</title>
+    <script src="vendors/jquery.min.js" charset="utf-8"></script>
+    <script src="scripts/client.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+    <div id="inputs">
+        <h3>New To-Dos</h3>
+        <input type="text" id="nameIn" placeholder="Task Name">
+        <input type="text" id="descriptionIn" placeholder="Description">
+        <button type="button" id="addTodoButton">Add Task</button>
+    </div>
+    <h3>Current To-Dos</h3>
+    <div id="outputs">
+    </div>
+</body>
+
 </html>
