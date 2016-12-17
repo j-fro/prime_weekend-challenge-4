@@ -63,4 +63,18 @@ router.put('/', function(req, res) {
     });
 });
 
+router.delete('/', function(req, res) {
+    /* Deletes the task specified in the request */
+    console.log('deleting a todo:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            client.query('DELETE FROM todos WHERE id=$1',
+                         [req.body.id]);
+            res.sendStatus(200);
+        }
+    });
+});
+
 module.exports = router;
