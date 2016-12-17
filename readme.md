@@ -14,11 +14,11 @@ Technologies Used:
 
 To-dos:
 -------
-* Basic page layout
-* Database setup
+* ~~Basic page layout~~
+* ~~Database setup~~
 * Server setup
-    * Serve base page
-    * GET To-dos
+    * ~~Serve base page~~
+    * ~~GET To-dos~~
     * POST new To-dos
     * PUT completed To-dos
     * DELETE unwanted To-dos
