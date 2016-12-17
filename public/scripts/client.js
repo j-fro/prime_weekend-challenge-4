@@ -51,6 +51,7 @@ function addTask() {
 function completeTask() {
     // Set status to false if complete, true if incomplete
     var status = $(this).text() === 'Incomplete';
+    $(this).toggleClass('completed-task');
     var id = $(this).parent().parent().data('id');
     var objectToSend = {
         id: id,
@@ -91,11 +92,15 @@ function deleteTask() {
 }
 
 function displayTasks(taskArray) {
-    var htmlString = '<table><thead><td>Name</td><td>Description</td>';
+    var htmlString = '<table><thead><td></td><td>Name</td><td>Description</td>';
+    var counter = 1;
     htmlString += '<td>Status</td></thead>';
     taskArray.forEach(function(task) {
-        htmlString += '<tr data-id="' + task.id + '">';
-        htmlString += '<td>' + task.name + '</td>';
+        htmlString += '<tr data-id="' + task.id + '"';
+        if (task.complete) {
+            htmlString += ' class="completed-task"';
+        }
+        htmlString += '><td>' + counter++ + '<td>' + task.name + '</td>';
         htmlString += '<td>' + task.description + '</td>';
         htmlString += '<td><button class="status-button">';
         if (task.complete) {
@@ -104,7 +109,7 @@ function displayTasks(taskArray) {
             htmlString += 'Incomplete';
         }
         htmlString += '</button></td>';
-        htmlString += '<td><button class="delete-button">Delete</button></td>';
+        htmlString += '<td><button class="delete-button">Delete</button></td></tr>';
     });
     htmlString += '</table>';
     $('#outputs').html(htmlString);

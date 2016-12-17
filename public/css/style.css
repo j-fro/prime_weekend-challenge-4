@@ -1,0 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    /*display: inline-block;*/
+    /*margin: auto;*/
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+h3 {
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+table, tr, td {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 0 20px 0 20px;
+}
+
+.delete-button, .status-button {
+    width: 100%;
+}
+
+.completed-task {
+    color: #eeeeee;
+    background-color: #555555;
+}
