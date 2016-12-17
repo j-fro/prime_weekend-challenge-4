@@ -7,6 +7,8 @@ $(document).ready(function() {
 function enable() {
     // Set up event handlers
     $('#addTodoButton').on('click', addTask);
+    $(document).on('click', '.status-button', completeTask);
+    $(document).on('click', '.delete-button', deleteTask);
 }
 
 // GET from server
@@ -38,6 +40,48 @@ function addTask() {
         type: 'POST',
         data: objectToSend,
         success: function(response) {
+            getTasks();
+        },
+        error: function(error) {
+            console.log("AJAX error:", error);
+        }
+    });
+}
+
+function completeTask() {
+    // Set status to false if complete, true if incomplete
+    var status = $(this).text() === 'Incomplete';
+    var id = $(this).parent().parent().data('id');
+    var objectToSend = {
+        id: id,
+        complete: status
+    };
+    console.log(objectToSend);
+    // PUT to the Server
+    $.ajax({
+        url: '/todos',
+        type: 'PUT',
+        data: objectToSend,
+        success: function(response) {
+            console.log(response);
+            getTasks();
+        },
+        error: function(error) {
+            console.log("AJAX error:", error);
+        }
+    });
+}
+
+function deleteTask() {
+    var id = $(this).parent().parent().data('id');
+    $.ajax({
+        url: '/todos',
+        type: 'DELETE',
+        data: {
+            id: id
+        },
+        success: function(response) {
+            console.log(response);
             getTasks();
         },
         error: function(error) {

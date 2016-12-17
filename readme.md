@@ -24,9 +24,9 @@ To-dos:
     * ~~DELETE unwanted To-dos~~
 * Client setup
     * ~~Display To-dos~~
-    * !!Add new To-dos~~
-    * Complete & recolor To-dos
-    * Delete To-dos
+    * ~~Add new To-dos~~
+    * ~~Complete & recolor To-dos~~
+    * ~~Delete To-dos~~
 Stretch Goals:
 --------------
 * Client side delete confirmation

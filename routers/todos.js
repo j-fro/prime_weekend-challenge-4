@@ -45,6 +45,7 @@ router.post('/', function(req, res) {
             client.query('INSERT INTO todos (name, description) VALUES ($1, $2)',
                          [req.body.name, req.body.description]);
             res.sendStatus(200);
+            done();
         }
     });
 });
@@ -59,6 +60,7 @@ router.put('/', function(req, res) {
             client.query('UPDATE todos SET complete=$1 WHERE id=$2',
                          [req.body.complete, req.body.id]);
             res.sendStatus(200);
+            done();
         }
     });
 });
@@ -73,6 +75,7 @@ router.delete('/', function(req, res) {
             client.query('DELETE FROM todos WHERE id=$1',
                          [req.body.id]);
             res.sendStatus(200);
+            done();
         }
     });
 });
