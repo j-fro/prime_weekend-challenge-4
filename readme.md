@@ -19,7 +19,7 @@ To-dos:
 * Server setup
     * ~~Serve base page~~
     * ~~GET To-dos~~
-    * POST new To-dos
+    * ~~POST new To-dos~~
     * PUT completed To-dos
     * DELETE unwanted To-dos
 * Client setup

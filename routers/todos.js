@@ -35,4 +35,18 @@ router.get('/', function(req, res) {
     });
 });
 
+router.post('/', function(req, res) {
+    /* Adds a new task to the database based on client information */
+    console.log('adding a todo:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            client.query('INSERT INTO todos (name, description) VALUES ($1, $2)',
+                         [req.body.name, req.body.description]);
+            res.send('OK');
+        }
+    });
+});
+
 module.exports = router;
