@@ -20,7 +20,7 @@ To-dos:
     * ~~Serve base page~~
     * ~~GET To-dos~~
     * ~~POST new To-dos~~
-    * PUT completed To-dos
+    * ~~PUT completed To-dos~~
     * DELETE unwanted To-dos
 * Client setup
     * Display To-dos

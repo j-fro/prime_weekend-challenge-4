@@ -44,7 +44,21 @@ router.post('/', function(req, res) {
         } else {
             client.query('INSERT INTO todos (name, description) VALUES ($1, $2)',
                          [req.body.name, req.body.description]);
-            res.send('OK');
+            res.sendStatus(200);
+        }
+    });
+});
+
+router.put('/', function(req, res) {
+    /* Updates the completion status of an existing task */
+    console.log('updating a todo:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            client.query('UPDATE todos SET complete=$1 WHERE id=$2',
+                         [req.body.complete, req.body.id]);
+            res.sendStatus(200);
         }
     });
 });
