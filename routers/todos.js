@@ -20,16 +20,12 @@ router.get('/', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            var results = [];
-            var query = client.query('SELECT * FROM todos ORDER BY complete, id');
-            // Iterate through query and push to results
-            query.on('row', function(row) {
-                results.push(row);
-            });
-            // Close the connection at end of query
-            query.on('end', function() {
+            var tasks = [];
+            var query = client.query('SELECT * FROM todos ORDER BY complete, id', function(err, result) {
+                console.log('result.rows:', result.rows);
+                tasks = result.rows;
+                res.json(tasks);
                 done();
-                res.json(results);
             });
         }
     });

@@ -15,6 +15,10 @@ button {
     border: 1px solid #88B04B;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 button.delete-button {
     background-color: #aa3311 !important;
     color: #eeeeee !important;
