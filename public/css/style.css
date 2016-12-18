@@ -4,6 +4,17 @@ body {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
     background-color: #B2E79F;
+}
+
+header {
+    padding: 20px;
+}
+
+header img {
+    height: 50px;
+}
+
+main {
     vertical-align: top;
 }
 
@@ -64,17 +75,17 @@ tbody tr:nth-child(2n+1) {
     border: 1px solid #52703F;
 }
 
-tbody tr:nth-child(2n+1) button{
+tbody tr:nth-child(2n+1) button, tbody tr:nth-child(2n) button {
     background-color: #555555;
     color: #eeeeee;
 }
 
 tbody tr:nth-child(2n+1).completed-task {
-    background-color: #444444;
+    background-color: #333333;
     color: #eeeeee;
 }
 
-tbody tr:nth-child(2n+1).completed-task button{
+tbody tr:nth-child(2n+1).completed-task button, tbody tr:nth-child(2n).completed-task button{
     background-color: #B2E79F;
     border: 1px solid #88B04B;
     color: #555555;
@@ -85,20 +96,9 @@ tbody tr:nth-child(2n) {
     border: 1px solid #88B04B;
 }
 
-tbody tr:nth-child(2n) button {
-    background-color: #444444;
-    color: #eeeeee;
-}
-
 tbody tr:nth-child(2n).completed-task {
-    background-color: #555555;
+    background-color: #666666;
     color: #eeeeee;
-}
-
-tbody tr:nth-child(2n).completed-task button{
-    background-color: #88B04B;
-    border: 1px solid #52703F;
-    color: #555555;
 }
 
 td {
