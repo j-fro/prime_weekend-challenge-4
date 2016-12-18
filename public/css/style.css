@@ -1,11 +1,14 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-    /*display: inline-block;*/
-    /*margin: auto;*/
     text-align: center;
     font-family: 'Open Sans', sans-serif;
+    background-color: #B2E79F;
+    vertical-align: top;
+}
 
+section {
+    vertical-align: top;
 }
 
 h3 {
@@ -13,20 +16,63 @@ h3 {
     margin-bottom: 5px;
 }
 
-table, tr, td {
+#inputs {
+    display: inline-block;;
+    background-color: #88B04B;
+    padding: 10px;
+    border: 1px solid #52703F;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+#inputs h3 {
+    margin: 5px;
+}
+
+#tasks {
+    display: inline-block;
+    background-color: #88B04B;
+    padding: 10px;
+    border: 1px solid #52703F;
+    border-radius: 20px;
+    margin: 20px;
+    vertical-align: top;
+}
+
+table {
     margin: auto;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+tr {
+    border-radius: 5px;
+}
+
+tbody tr:nth-child(2n+1) {
+    background-color: #88B04B;
+    border: 1px solid #52703F;
+}
+
+tbody tr:nth-child(2n+1).completed-task {
+    background-color: #444444;
+    color: #eeeeee;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: #B2E79F;
+    border: 1px solid #88B04B;
+}
+
+tbody tr:nth-child(2n).completed-task {
+    background-color: #555555;
+    color: #eeeeee;
 }
 
 td {
-    padding: 0 20px 0 20px;
+    padding: 5px 20px 5px 20px;
 }
 
 .delete-button, .status-button {
     width: 100%;
-}
-
-.completed-task {
-    color: #eeeeee;
-    background-color: #555555;
 }

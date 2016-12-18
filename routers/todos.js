@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
             console.log(err);
         } else {
             var results = [];
-            var query = client.query('SELECT * FROM todos ORDER BY ID');
+            var query = client.query('SELECT * FROM todos ORDER BY complete, id');
             // Iterate through query and push to results
             query.on('row', function(row) {
                 results.push(row);
