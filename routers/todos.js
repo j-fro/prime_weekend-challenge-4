@@ -21,10 +21,13 @@ router.get('/', function(req, res) {
             console.log(err);
         } else {
             var tasks = [];
+            // Query all rows in the database and act on the results
             var query = client.query('SELECT * FROM todos ORDER BY complete, id', function(err, result) {
-                console.log('result.rows:', result.rows);
+                // Set tasks array equal to the rows returned
                 tasks = result.rows;
+                // Return the tasks array
                 res.json(tasks);
+                // Close the database connection
                 done();
             });
         }
