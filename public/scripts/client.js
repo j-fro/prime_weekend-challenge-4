@@ -26,7 +26,6 @@ function getTasks() {
     });
 }
 
-// POST to server
 function addTask() {
     var name = $('#nameIn').val();
     var description = $('#descriptionIn').val();
@@ -40,7 +39,11 @@ function addTask() {
         type: 'POST',
         data: objectToSend,
         success: function(response) {
+            // Clear inputs
+            $('#nameIn').val('');
+            $('#descriptionIn').val('');
             getTasks();
+
         },
         error: function(error) {
             console.log("AJAX error:", error);
