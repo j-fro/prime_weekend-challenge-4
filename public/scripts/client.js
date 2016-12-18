@@ -78,20 +78,22 @@ function completeTask() {
 
 function deleteTask() {
     var id = $(this).parent().parent().data('id');
-    $.ajax({
-        url: '/todos',
-        type: 'DELETE',
-        data: {
-            id: id
-        },
-        success: function(response) {
-            console.log(response);
-            getTasks();
-        },
-        error: function(error) {
-            console.log("AJAX error:", error);
-        }
-    });
+    if (confirm('Are you sure you want to delete "' + $(this).parent().parent().children().eq(1).text() + '"?')) {
+        $.ajax({
+            url: '/todos',
+            type: 'DELETE',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response);
+                getTasks();
+            },
+            error: function(error) {
+                console.log("AJAX error:", error);
+            }
+        });
+    }
 }
 
 function displayTasks(taskArray) {
