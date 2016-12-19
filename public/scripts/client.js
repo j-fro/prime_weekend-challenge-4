@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Add event handlers
-    getTasks();
+    getAllQueries();
     enable();
 });
 
@@ -20,9 +20,29 @@ function getTasks() {
             console.log(response);
             displayTasks(response);
         },
-        error: function(error) {
-            console.log("AJAX error:", error);
-        }
+        error: ajaxError
+    });
+}
+
+function getPeople() {
+    $.ajax({
+        url: '/person',
+        type: 'GET',
+        success: function(response) {
+            displayPersonSelect(response);
+        },
+        error: ajaxError
+    });
+}
+
+function getAllQueries() {
+    $.ajax({
+        url: '/combined',
+        type: 'GET',
+        success: function(response) {
+            displayTasks(response.tasks, response.people, response.combined);
+        },
+        error: ajaxError
     });
 }
 
@@ -96,26 +116,54 @@ function deleteTask() {
     }
 }
 
-function displayTasks(taskArray) {
-    console.log('displaying', taskArray);
-    var htmlString = '<table><thead><td></td><td>Name</td><td>Description</td>';
-    var counter = 1;
-    htmlString += '<td>Status</td></thead>';
+function displayPersonSelect(personArray) {
+    var htmlString = '';
+    for (var i = 0; i < personArray.length; i++) {
+        htmlString += '<option value="' + personArray[i].id + '">';
+        htmlString += personArray[i].name + '</option>';
+    }
+    $('.person-select').html(htmlString);
+}
+
+function createPersonSelect(personArray) {
+    var htmlString = '<select>';
+    for (var i = 0; i < personArray.length; i++) {
+        htmlString += '<option value="' + personArray[i].id + '">';
+        htmlString += personArray[i].name + '</option>';
+    }
+    htmlString += '</select>';
+    return htmlString;
+}
+
+function displayTasks(taskArray, personArray, combinedArray) {
+    $('#taskOutputs').html('');
+    var selectText = createPersonSelect(personArray);
     taskArray.forEach(function(task) {
-        htmlString += '<tr data-id="' + task.id + '"';
+        var htmlString = '<div class="task" id="task-' + task.id +
+            '" data-id="' + task.id + '"><p>' + task.name + selectText +
+            '<button class="add-person-button">Add to Task</button>' +
+            '<button class="status-button"></button>' +
+            '<button class="delete-button">Delete</button>';
+        // Filter the array combining people and tasks to just the current task
+        var filteredArray = combinedArray.filter(function(item) {
+            console.log(item);
+            return item.task_id === task.id;
+        });
+        console.log('Filtered array:', combinedArray);
+        // Add all people who are linked to the current task
+        filteredArray.forEach(function(person) {
+            htmlString += '<li id="task-"' + task.id + '-person-' + person.person_id +
+                '">' + person.person_name + '</li>';
+        });
+        $('#taskOutputs').append(htmlString);
         if (task.complete) {
-            htmlString += ' class="completed-task"';
-        }
-        htmlString += '><td>' + counter++ + '<td>' + task.name + '</td>';
-        htmlString += '<td><button class="status-button">';
-        if (task.complete) {
-            htmlString += 'Complete';
+            $('#taskOutputs').find('#task-' + task.id).find('.status-button').text('Complete');
         } else {
-            htmlString += 'Incomplete';
+            $('#taskOutputs').find('#task-' + task.id).find('.status-button').text('Incomplete');
         }
-        htmlString += '</button></td>';
-        htmlString += '<td><button class="delete-button">Delete</button></td></tr>';
     });
-    htmlString += '</table>';
-    $('#taskOutputs').html(htmlString);
+}
+
+function ajaxError(error) {
+    console.log('AJAX error:', error);
 }

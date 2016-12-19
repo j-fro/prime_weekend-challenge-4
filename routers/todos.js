@@ -21,8 +21,11 @@ router.get('/', function(req, res) {
             console.log(err);
         } else {
             var tasks = [];
+            var queryString = 'SELECT * FROM task ';
+            queryString += 'LEFT JOIN person_task ON task.id=person_task.task_id ';
+            queryString += 'ORDER BY complete, id';
             // Query all rows in the database and act on the results
-            var query = client.query('SELECT * FROM task LEFT JOIN person_task ON task.id=person_task.task_id ORDER BY complete, id', function(err, result) {
+            var query = client.query(queryString, function(err, result) {
                 // Set tasks array equal to the rows returned
                 tasks = result.rows;
                 // Return the tasks array

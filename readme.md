@@ -27,9 +27,10 @@ To-dos:
     * ~~Add new To-dos~~
     * ~~Complete & recolor To-dos~~
     * ~~Delete To-dos~~
+    
 Stretch Goals:
 --------------
-* Client side delete confirmation
-* Sort To-dos by completion
+* ~~Client side delete confirmation~~
+* ~~Sort To-dos by completion~~
 * Sanitize/validate input
-* Host on Heroku
+* ~~Host on Heroku~~

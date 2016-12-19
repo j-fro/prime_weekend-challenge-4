@@ -3,6 +3,7 @@ var path = require('path');
 var todos = require('../routers/todos.js');
 var person = require('../routers/person.js');
 var list = require('../routers/list.js');
+var combined = require('../routers/combined.js');
 
 var port = process.env.PORT || 8080;
 
@@ -11,6 +12,7 @@ var app = express();
 app.use('/todos', todos);
 app.use('/person', person);
 app.use('/list', list);
+app.use('/combined', combined);
 
 // Base URL
 app.get('/', function(req, res) {
