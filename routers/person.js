@@ -20,15 +20,16 @@ router.get('/', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            var tasks = [];
-            var queryString = 'SELECT * FROM person';
-            queryString += 'LEFT JOIN person_task ON person.id = person_task.person_id';
+            var people = [];
             // Query all rows in the database and act on the results
-            var query = client.query(queryString, function(err, result) {
+            var query = client.query('SELECT * FROM person', function(err, result) {
                 // Set tasks array equal to the rows returned
-                tasks = result.rows;
+                if (err) {
+                    console.log(err);
+                }
+                people = result.rows;
                 // Return the tasks array
-                res.json(tasks);
+                res.json(people);
                 // Close the database connection
                 done();
             });

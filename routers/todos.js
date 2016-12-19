@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
         } else {
             var tasks = [];
             // Query all rows in the database and act on the results
-            var query = client.query('SELECT * FROM task ORDER BY complete, id', function(err, result) {
+            var query = client.query('SELECT * FROM task LEFT JOIN person_task ON task.id=person_task.task_id ORDER BY complete, id', function(err, result) {
                 // Set tasks array equal to the rows returned
                 tasks = result.rows;
                 // Return the tasks array
@@ -80,7 +80,7 @@ router.put('/addToList', function(req, res) {
 
 router.put('/addToPerson', function(req, res) {
     /* Creates a relationship between a person and a task */
-    pg.connect(connectionString, function(req, res) {
+    pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
