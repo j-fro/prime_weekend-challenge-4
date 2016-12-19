@@ -1,12 +1,16 @@
 var express = require('express');
 var path = require('path');
 var todos = require('../routers/todos.js');
+var person = require('../routers/person.js');
+var list = require('../routers/list.js');
 
 var port = process.env.PORT || 8080;
 
 var app = express();
 // To-do router
 app.use('/todos', todos);
+app.use('/person', person);
+app.use('/list', list);
 
 // Base URL
 app.get('/', function(req, res) {

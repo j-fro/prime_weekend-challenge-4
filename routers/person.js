@@ -14,15 +14,17 @@ var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/' 
 
 router.get('/', function(req, res) {
     /* Gets all exising tasks from the database and returns to the client */
-    console.log('getting todos');
+    console.log('getting people');
     // Query the database for tasks
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
             var tasks = [];
+            var queryString = 'SELECT * FROM person';
+            queryString += 'LEFT JOIN person_task ON person.id = person_task.person_id';
             // Query all rows in the database and act on the results
-            var query = client.query('SELECT * FROM task ORDER BY complete, id', function(err, result) {
+            var query = client.query(queryString, function(err, result) {
                 // Set tasks array equal to the rows returned
                 tasks = result.rows;
                 // Return the tasks array
@@ -36,12 +38,12 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
     /* Adds a new task to the database based on client information */
-    console.log('adding a todo:', req.body);
+    console.log('adding a person:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
-            client.query('INSERT INTO task (name) VALUES ($1)',
+            client.query('INSERT INTO person (name) VALUES ($1)',
                          [req.body.name]);
             res.sendStatus(200);
             done();
@@ -51,41 +53,13 @@ router.post('/', function(req, res) {
 
 router.put('/', function(req, res) {
     /* Updates the completion status of an existing task */
-    console.log('updating a todo:', req.body);
+    console.log('updating a person:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
-            client.query('UPDATE task SET complete=$1 WHERE id=$2',
-                         [req.body.complete, req.body.id]);
-            res.sendStatus(200);
-            done();
-        }
-    });
-});
-
-router.put('/addToList', function(req, res) {
-    /* Adds a task to a list */
-    pg.connect(connectionString, function(err, client, done) {
-        if (err) {
-            console.log(err);
-        } else {
-            client.query('UPDATE task SET list_id=$1 WHERE id=$2',
-                         [req.body.listId, req.body.id]);
-            res.sendStatus(200);
-            done();
-        }
-    });
-});
-
-router.put('/addToPerson', function(req, res) {
-    /* Creates a relationship between a person and a task */
-    pg.connect(connectionString, function(req, res) {
-        if (err) {
-            console.log(err);
-        } else {
-            client.query('INSERT INTO person_task (person_id, task_id) VALUES ($1, $2)',
-                         [req.body.personId, req.body.taskId]);
+            client.query('UPDATE person SET name=$1 WHERE id=$1',
+                         [req.body.name, req.body.id]);
             res.sendStatus(200);
             done();
         }
@@ -94,12 +68,12 @@ router.put('/addToPerson', function(req, res) {
 
 router.delete('/', function(req, res) {
     /* Deletes the task specified in the request */
-    console.log('deleting a todo:', req.body);
+    console.log('deleting a person:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
-            client.query('DELETE FROM task WHERE id=$1',
+            client.query('DELETE FROM person WHERE id=$1',
                          [req.body.id]);
             res.sendStatus(200);
             done();

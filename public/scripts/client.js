@@ -97,6 +97,7 @@ function deleteTask() {
 }
 
 function displayTasks(taskArray) {
+    console.log('displaying', taskArray);
     var htmlString = '<table><thead><td></td><td>Name</td><td>Description</td>';
     var counter = 1;
     htmlString += '<td>Status</td></thead>';
@@ -106,7 +107,6 @@ function displayTasks(taskArray) {
             htmlString += ' class="completed-task"';
         }
         htmlString += '><td>' + counter++ + '<td>' + task.name + '</td>';
-        htmlString += '<td>' + task.description + '</td>';
         htmlString += '<td><button class="status-button">';
         if (task.complete) {
             htmlString += 'Complete';
@@ -117,5 +117,5 @@ function displayTasks(taskArray) {
         htmlString += '<td><button class="delete-button">Delete</button></td></tr>';
     });
     htmlString += '</table>';
-    $('#outputs').html(htmlString);
+    $('#taskOutputs').html(htmlString);
 }
