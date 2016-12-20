@@ -20,13 +20,13 @@ router.get('/', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            var tasks = [];
+            var lists = [];
             // Query all rows in the database and act on the results
             var query = client.query('SELECT * FROM list ORDER BY id', function(err, result) {
                 // Set tasks array equal to the rows returned
-                tasks = result.rows;
+                lists = result.rows;
                 // Return the tasks array
-                res.json(tasks);
+                res.json(lists);
                 // Close the database connection
                 done();
             });

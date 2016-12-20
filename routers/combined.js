@@ -24,12 +24,15 @@ router.get('/', function(req, res) {
             lists = [];
             // Query tasks and people
             var queryString = 'SELECT task.id AS task_id, person.id AS person_id, ';
-            queryString += 'person.name AS person_name FROM task ';
+            queryString += 'person.name AS person_name, task.list_id FROM task ';
             queryString += 'JOIN person_task ON task.id=person_task.task_id ';
             queryString += 'JOIN person ON person_task.person_id=person.id';
             var query = client.query(queryString, function(err, result) {
-                console.log(err);
-                combined = result.rows;
+                if (err) {
+                    console.log(err);
+                } else {
+                    combined = result.rows;
+                }
             });
             // Query tasks
             queryString = 'SELECT * FROM task';

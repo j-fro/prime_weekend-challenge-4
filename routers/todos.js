@@ -44,8 +44,8 @@ router.post('/', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            client.query('INSERT INTO task (name) VALUES ($1)',
-                         [req.body.name]);
+            client.query('INSERT INTO task (name, list_id) VALUES ($1, $2)',
+                         [req.body.name, req.body.listId]);
             res.sendStatus(200);
             done();
         }
