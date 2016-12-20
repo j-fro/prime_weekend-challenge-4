@@ -121,11 +121,11 @@ function addList() {
 
 function completeTask() {
     // Set status to false if complete, true if incomplete
-    console.log('class:', $(this).parent().hasClass('completed-task'));
+    console.log('class:', $(this).parent().parent().hasClass('completed-task'));
     // Flip the current status
-    var status = !($(this).parent().hasClass('completed-task'));
+    var status = !($(this).parent().parent().hasClass('completed-task'));
     // $(this).toggleClass('completed-task');
-    var id = $(this).parent().data('id');
+    var id = $(this).parent().parent().data('id');
     var objectToSend = {
         id: id,
         complete: status
@@ -147,7 +147,7 @@ function completeTask() {
 }
 
 function deleteTask() {
-    var id = $(this).parent().data('id');
+    var id = $(this).parent().parent().data('id');
     if (confirm('Are you sure you want to delete "' + $(this).parent().parent().children().eq(1).text() + '"?')) {
         $.ajax({
             url: '/todos',
@@ -181,8 +181,8 @@ function deleteList() {
 }
 
 function addPersonToTask() {
-    var personId = $(this).parent().find('select').val();
-    var taskId = $(this).parent().data('id');
+    var personId = $(this).parent().parent().find('select').val();
+    var taskId = $(this).parent().parent().data('id');
     $.ajax({
         url: 'todos/addToPerson',
         type: 'PUT',
@@ -199,14 +199,16 @@ function addPersonToTask() {
 }
 
 function expandTasks() {
-    $(this).parent().find('.assignees').show();
+    var id = $(this).parent().parent().data('id');
+    $(this).parent().parent().parent().find('.task-' + id).show();
     $(this).html('<i class="fa fa-caret-up fa-lg"></i>');
     $(this).removeClass('expand-button');
     $(this).addClass('collapse-button');
 }
 
 function collapseTasks() {
-    $(this).parent().find('.assignees').hide();
+    var id = $(this).parent().parent().data('id');
+    $(this).parent().parent().parent().find('.task-' + id).hide();
     $(this).html('<i class="fa fa-caret-down fa-lg"></i>');
     $(this).removeClass('collapse-button');
     $(this).addClass('expand-button');
@@ -242,11 +244,11 @@ function displayTasks(taskArray, personArray, combinedArray) {
     $('#taskOutputs').html('');
     var selectText = createPersonSelect(personArray);
     taskArray.forEach(function(task) {
-        var htmlString = '<div class="task" id="task-' + task.id +
-            '" data-id="' + task.id + '"><button class="status-button"></button>' +
-            '<button class="expand-button"><i class="fa fa-caret-down fa-lg"></i></button>' + task.name;
-        htmlString += selectText + '<button class="add-person-button"><i class="fa fa-plus fa-lg"></i></button>' +
-            '<button class="delete-button"><i class="fa fa-times fa-lg"></i></button><div class="assignees">';
+        var htmlString = '<tr class="task" id="task-' + task.id +
+            '" data-id="' + task.id + '"><td><button class="status-button"></button></td>' +
+            '<td><button class="expand-button"><i class="fa fa-caret-down fa-lg"></i></button></td><td>' + task.name;
+        htmlString += '</td><td>' + selectText + '</td><td><button class="add-person-button"><i class="fa fa-plus fa-lg"></i></button></td>' +
+            '<td><button class="delete-button"><i class="fa fa-times fa-lg"></i></button></td><div class="assignees">';
         // Filter the array combining people and tasks to just the current task
         var filteredArray = combinedArray.filter(function(item) {
             return item.task_id === task.id;
@@ -256,10 +258,10 @@ function displayTasks(taskArray, personArray, combinedArray) {
         console.log('Filtered array:', combinedArray);
         // Add all people who are linked to the current task
         filteredArray.forEach(function(person) {
-            htmlString += '<p id="task-"' + task.id + '-person-' + person.person_id +
-                '">' + person.person_name + '</p>';
+            htmlString += '<tr id="task-' + task.id + '-person-' + person.person_id +
+                '" class="assignees task-' + task.id + '"><td>' + person.person_name + '</td></tr>';
         });
-        htmlString += '</div></div>';
+        htmlString += '</div></tr>';
         $('#taskOutputs').append(htmlString);
         if (task.complete) {
             $('#taskOutputs').find('#task-' + task.id).find('.status-button').html('<i class="fa fa-check-square-o fa-lg"></i>');
