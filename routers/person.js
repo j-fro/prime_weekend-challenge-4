@@ -67,6 +67,20 @@ router.put('/', function(req, res) {
     });
 });
 
+router.put('/removeFromTask', function(req, res) {
+    console.log('Removing from task:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            client.query('DELETE FROM person_task WHERE person_id=$1 AND task_id=$2',
+                         [req.body.personId, req.body.taskId]);
+            res.sendStatus(200);
+            done();
+        }
+    });
+});
+
 router.delete('/', function(req, res) {
     /* Deletes the task specified in the request */
     console.log('deleting a person:', req.body);

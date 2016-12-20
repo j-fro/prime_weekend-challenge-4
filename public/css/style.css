@@ -2,6 +2,7 @@
 body {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
+    background-color: #88B04B;
 }
 
 header {
@@ -22,7 +23,14 @@ aside {
 }
 
 table {
-    display: inline-block;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 0 30px;
+    line-height: 1.5;
+
 }
 
 button {
@@ -30,8 +38,6 @@ button {
     font-size: 14px;
     border-radius: 5px;
     padding: 5px 10px;
-    /*background-color: #B2E79F;*/
-    /*border: 1px solid #88B04B;*/
     background-color: rgba(0, 0, 0, 0);
     border: none;
 }
@@ -40,15 +46,12 @@ button:hover {
     cursor: pointer;
 }
 
-button.delete-button, #deleteList {
-    /*background-color: #aa3311 !important;*/
-    /*color: #eeeeee !important;*/
-    /*border: 1px solid #111111 !important;*/
+button.delete-button, #deleteList, .remove-person {
     color: #aa3311 !important;
 }
 
 input {
-    height: 30px;
+    height: 20px;
     border-radius: 5px;
 }
 
@@ -62,13 +65,12 @@ select {
 
 h3 {
     padding: 0;
-    margin: 5px;
+    margin: 5px 5px 30px;
 }
 
 #inputs {
     display: inline-block;
-    ;
-    background-color: #88B04B;
+
     padding: 10px;
     border: 1px solid #52703F;
     border-radius: 20px;
@@ -76,24 +78,16 @@ h3 {
 }
 
 .task {
-    /*display: inline-block;*/
-    /*background-color: #88B04B;*/
     padding: 10px;
-    /*border: 1px solid #52703F;*/
     border-radius: 20px;
-    /*margin: 0 20px 20px 20px;*/
     vertical-align: top;
 }
 
-.status-button {
-    left: 20%;
-}
-
-.expand-button, .collapse-button {
-    left: 30%;
-}
-
 .completed-task button {
+    color: #eeeeee;
+}
+
+.completed-task select {
     color: #eeeeee;
 }
 

@@ -20,6 +20,7 @@ function enable() {
     $(document).on('click', '.add-person-button', addPersonToTask);
     $(document).on('click', '.expand-button', expandTasks);
     $(document).on('click', '.collapse-button', collapseTasks);
+    $(document).on('click', '.remove-person', removePersonFromTask);
 }
 
 function getAllQueries() {
@@ -198,6 +199,24 @@ function addPersonToTask() {
     });
 }
 
+function removePersonFromTask() {
+    var personId = $(this).data('person-id');
+    var taskId = $(this).data('task-id');
+    $.ajax({
+        url: 'person/removeFromTask',
+        type: 'PUT',
+        data: {
+            taskId: taskId,
+            personId: personId
+        },
+        success: function(response) {
+            console.log(response);
+            getAllQueries();
+        },
+        error: ajaxError
+    });
+}
+
 function expandTasks() {
     var id = $(this).parent().parent().data('id');
     $(this).parent().parent().parent().find('.task-' + id).show();
@@ -247,7 +266,7 @@ function displayTasks(taskArray, personArray, combinedArray) {
         var htmlString = '<tr class="task" id="task-' + task.id +
             '" data-id="' + task.id + '"><td><button class="status-button"></button></td>' +
             '<td><button class="expand-button"><i class="fa fa-caret-down fa-lg"></i></button></td><td>' + task.name;
-        htmlString += '</td><td>' + selectText + '</td><td><button class="add-person-button"><i class="fa fa-plus fa-lg"></i></button></td>' +
+        htmlString += '</td><td>' + selectText + '<button class="add-person-button"><i class="fa fa-plus"></i></button></td>' +
             '<td><button class="delete-button"><i class="fa fa-times fa-lg"></i></button></td><div class="assignees">';
         // Filter the array combining people and tasks to just the current task
         var filteredArray = combinedArray.filter(function(item) {
@@ -259,7 +278,10 @@ function displayTasks(taskArray, personArray, combinedArray) {
         // Add all people who are linked to the current task
         filteredArray.forEach(function(person) {
             htmlString += '<tr id="task-' + task.id + '-person-' + person.person_id +
-                '" class="assignees task-' + task.id + '"><td>' + person.person_name + '</td></tr>';
+                '" class="assignees task-' + task.id + '"><td></td><td>' +
+                '<button class="remove-person" data-task-id="' + task.id +
+                '" data-person-id="' + person.person_id + '"><i class="fa fa-minus fa-lg">' +
+                '</i></button></td><td>' + person.person_name + '</td></tr>';
         });
         htmlString += '</div></tr>';
         $('#taskOutputs').append(htmlString);

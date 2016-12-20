@@ -6,7 +6,7 @@
     <title>To-Do List</title>
     <script src="vendors/jquery-3.0.0.min.js" charset="utf-8"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -20,24 +20,25 @@
         <button type="button" class="add-list-button">+</button>
     </section>
     <main id="main">
-        <aside class="input">
-            <div class="input">
-                <input type="text" id="taskNameIn" placeholder="Task Name">
-                <button type="button" id="addTodoButton"><i class="fa fa-plus fa-lg"></i></button>
-            </div>
-            <div class="input">
-                <input type="text" id="personNameIn" placeholder="Person Name">
-                <button type="button" id="addPersonButton"><i class="fa fa-plus fa-lg"></i></button>
-            </div>
-            <div class="input">
-                <input type="text" class="list-name-in" placeholder="List Name">
-                <button type="button" class="add-list-button"><i class="fa fa-plus fa-lg"></i></button>
-            </div>
-        </aside>
-        <h3>Task List: <select id="lists"></select><button type="button" id="deleteList"><i class="fa fa-times fa-lg"></i></button></h3>
+        <div class="input">
+            <input type="text" class="list-name-in" placeholder="List Name">
+            <button type="button" class="add-list-button"><i class="fa fa-plus fa-lg"></i></button>
+        </div>
+        <h3>Current Tasks: <select id="lists"></select><button type="button" id="deleteList"><i class="fa fa-times fa-lg"></i></button></h3>
         <div id="tasks">
-            <h3>Current To-Dos</h3>
+            <!-- <h3>Current To-Dos</h3> -->
+            <table>
+                <tr class="input">
+                    <td></td>
+                    <td></td>
+                    <td><input type="text" id="taskNameIn" placeholder="Task Name">
+                    <button type="button" id="addTodoButton"><i class="fa fa-plus fa-lg"></i></button></td>
+                    <td><input type="text" id="personNameIn" placeholder="Person Name">
+                    <button type="button" id="addPersonButton"><i class="fa fa-plus fa-lg"></i></button></td>
+                </tr>
+            </table>
             <table id="taskOutputs">
+
             </table>
         </div>
     </main>
