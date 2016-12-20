@@ -1,7 +1,10 @@
 $(document).ready(function() {
     // Add event handlers
+    $('main').hide();
+    $('#firstListItem').hide();
     getLists();
     getAllQueries();
+
     enable();
 });
 
@@ -9,11 +12,14 @@ function enable() {
     // Set up event handlers
     $('#addTodoButton').on('click', addTask);
     $('#addPersonButton').on('click', addPerson);
-    $('#addListButton').on('click', addList);
+    $('.add-list-button').on('click', addList);
+    $('#deleteList').on('click', deleteList);
     $('#lists').on('change', getAllQueries);
     $(document).on('click', '.status-button', completeTask);
     $(document).on('click', '.delete-button', deleteTask);
     $(document).on('click', '.add-person-button', addPersonToTask);
+    $(document).on('click', '.expand-button', expandTasks);
+    $(document).on('click', '.collapse-button', collapseTasks);
 }
 
 function getAllQueries() {
@@ -23,6 +29,7 @@ function getAllQueries() {
         type: 'GET',
         success: function(response) {
             displayFiltered(response);
+            $('.assignees').hide();
         },
         error: ajaxError
     });
@@ -33,10 +40,23 @@ function getLists() {
         url: '/list',
         type: 'GET',
         success: function(response) {
+            checkForFirstList(response);
             displayListSelect(response);
         },
         error: ajaxError
     });
+}
+
+function checkForFirstList(listArray) {
+    console.log('checking for first list:', listArray);
+    if (listArray.length < 1) {
+        $('#firstListItem').show();
+        $('main').hide();
+    } else {
+        console.log('elsing');
+        $('#firstListItem').hide();
+        $('main').show();
+    }
 }
 
 function addTask() {
@@ -86,7 +106,7 @@ function addList() {
         url: '/list',
         type: 'POST',
         data: {
-            name: $('#listNameIn').val()
+            name: $('.list-name-in').val()
         },
         success: function(response) {
             // Clear input
@@ -101,8 +121,10 @@ function addList() {
 
 function completeTask() {
     // Set status to false if complete, true if incomplete
-    var status = $(this).text() === 'Incomplete';
-    $(this).toggleClass('completed-task');
+    console.log('class:', $(this).parent().hasClass('completed-task'));
+    // Flip the current status
+    var status = !($(this).parent().hasClass('completed-task'));
+    // $(this).toggleClass('completed-task');
     var id = $(this).parent().data('id');
     var objectToSend = {
         id: id,
@@ -144,6 +166,20 @@ function deleteTask() {
     }
 }
 
+function deleteList() {
+    $.ajax({
+        url: '/list',
+        type: 'DELETE',
+        data: {
+            id: $('#lists').val()
+        },
+        success: function(response) {
+            getLists();
+        },
+        error: ajaxError
+    });
+}
+
 function addPersonToTask() {
     var personId = $(this).parent().find('select').val();
     var taskId = $(this).parent().data('id');
@@ -162,13 +198,26 @@ function addPersonToTask() {
     });
 }
 
+function expandTasks() {
+    $(this).parent().find('.assignees').show();
+    $(this).html('<i class="fa fa-caret-up fa-lg"></i>');
+    $(this).removeClass('expand-button');
+    $(this).addClass('collapse-button');
+}
+
+function collapseTasks() {
+    $(this).parent().find('.assignees').hide();
+    $(this).html('<i class="fa fa-caret-down fa-lg"></i>');
+    $(this).removeClass('collapse-button');
+    $(this).addClass('expand-button');
+}
+
 function displayFiltered(response) {
     console.log('displaying filtered');
     // displayListSelect(response.lists);
     var listId = $('#lists').val();
     console.log('list id:', listId);
     var filteredTasks = response.tasks.filter(function(task) {
-        console.log('in filter checking:', task);
         return task.list_id == listId;
     });
     console.log('filtered tasks:', filteredTasks);
@@ -193,27 +242,31 @@ function displayTasks(taskArray, personArray, combinedArray) {
     $('#taskOutputs').html('');
     var selectText = createPersonSelect(personArray);
     taskArray.forEach(function(task) {
-        var htmlString = '<li class="task" id="task-' + task.id +
-            '" data-id="' + task.id + '"><p>' + task.name + '</p>' + selectText +
-            '<button class="add-person-button">Add to Task</button>' +
-            '<button class="status-button"></button>' +
-            '<button class="delete-button">Delete</button><ul>';
+        var htmlString = '<div class="task" id="task-' + task.id +
+            '" data-id="' + task.id + '"><button class="status-button"></button>' +
+            '<button class="expand-button"><i class="fa fa-caret-down fa-lg"></i></button>' + task.name;
+        htmlString += selectText + '<button class="add-person-button"><i class="fa fa-plus fa-lg"></i></button>' +
+            '<button class="delete-button"><i class="fa fa-times fa-lg"></i></button><div class="assignees">';
         // Filter the array combining people and tasks to just the current task
         var filteredArray = combinedArray.filter(function(item) {
             return item.task_id === task.id;
         });
+
+
         console.log('Filtered array:', combinedArray);
         // Add all people who are linked to the current task
         filteredArray.forEach(function(person) {
-            htmlString += '<li id="task-"' + task.id + '-person-' + person.person_id +
-                '">' + person.person_name + '</li>';
+            htmlString += '<p id="task-"' + task.id + '-person-' + person.person_id +
+                '">' + person.person_name + '</p>';
         });
-        htmlString += '</ul></li>';
+        htmlString += '</div></div>';
         $('#taskOutputs').append(htmlString);
         if (task.complete) {
-            $('#taskOutputs').find('#task-' + task.id).find('.status-button').text('Complete');
+            $('#taskOutputs').find('#task-' + task.id).find('.status-button').html('<i class="fa fa-check-square-o fa-lg"></i>');
+            $('#taskOutputs').find('#task-' + task.id).addClass('completed-task');
         } else {
-            $('#taskOutputs').find('#task-' + task.id).find('.status-button').text('Incomplete');
+            $('#taskOutputs').find('#task-' + task.id).find('.status-button').html('<i class="fa fa-square-o fa-lg"></i>');
+            $('#taskOutputs').find('#task-' + task.id).removeClass('completed-task');
         }
     });
 }

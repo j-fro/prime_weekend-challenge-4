@@ -6,25 +6,35 @@
     <title>To-Do List</title>
     <script src="vendors/jquery-3.0.0.min.js" charset="utf-8"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <header>
+    <header id="header">
         <h1><img src="/images/check-mark-304890_1280.png">To-Do List</h1>
     </header>
-    <section class="inputs">
-        <h3>New To-Dos</h3>
-        <input type="text" id="taskNameIn" placeholder="Task Name">
-        <button type="button" id="addTodoButton">Add Task</button>
-        <input type="text" id="personNameIn" placeholder="Person Name">
-        <button type="button" id="addPersonButton">Add Person</button>
-        <input type="text" id="listNameIn" placeholder="List Name">
-        <button type="button" id="addListButton">Add List</button>
+    <section id="firstListItem">
+        <h3>Create a new task list:</h3>
+        <input type="text" class="list-name-in" placeholder="List Name">
+        <button type="button" class="add-list-button">+</button>
     </section>
-    <main>
-        <h3>Task List: <select id="lists">
-        </select></h3>
+    <main id="main">
+        <aside class="input">
+            <div class="input">
+                <input type="text" id="taskNameIn" placeholder="Task Name">
+                <button type="button" id="addTodoButton"><i class="fa fa-plus fa-lg"></i></button>
+            </div>
+            <div class="input">
+                <input type="text" id="personNameIn" placeholder="Person Name">
+                <button type="button" id="addPersonButton"><i class="fa fa-plus fa-lg"></i></button>
+            </div>
+            <div class="input">
+                <input type="text" class="list-name-in" placeholder="List Name">
+                <button type="button" class="add-list-button"><i class="fa fa-plus fa-lg"></i></button>
+            </div>
+        </aside>
+        <h3>Task List: <select id="lists"></select><button type="button" id="deleteList"><i class="fa fa-times fa-lg"></i></button></h3>
         <div id="tasks">
             <h3>Current To-Dos</h3>
             <ol id="taskOutputs">

@@ -1,9 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-
 body {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
-    background-color: #B2E79F;
 }
 
 header {
@@ -18,27 +16,44 @@ main {
     vertical-align: top;
 }
 
+aside {
+    float: left;
+    position: fixed;
+}
+
 button {
+    height: 30px;
     font-size: 14px;
     border-radius: 5px;
     padding: 5px 10px;
-    background-color: #B2E79F;
-    border: 1px solid #88B04B;
-}
-
-#lists {
-    height: 50px;
-    font-size: 16px;
+    /*background-color: #B2E79F;*/
+    /*border: 1px solid #88B04B;*/
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
 
 button:hover {
     cursor: pointer;
 }
 
-button.delete-button {
-    background-color: #aa3311 !important;
-    color: #eeeeee !important;
-    border: 1px solid #111111 !important;
+button.delete-button, #deleteList {
+    /*background-color: #aa3311 !important;*/
+    /*color: #eeeeee !important;*/
+    /*border: 1px solid #111111 !important;*/
+    color: #aa3311 !important;
+}
+
+input {
+    height: 30px;
+    border-radius: 5px;
+}
+
+select {
+    height: 30px;
+    font-size: 16px;
+    margin: 0 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
 
 h3 {
@@ -47,7 +62,8 @@ h3 {
 }
 
 #inputs {
-    display: inline-block;;
+    display: inline-block;
+    ;
     background-color: #88B04B;
     padding: 10px;
     border: 1px solid #52703F;
@@ -55,57 +71,39 @@ h3 {
     margin: 20px;
 }
 
-#tasks {
-    display: inline-block;
-    background-color: #88B04B;
+.task {
+    /*display: inline-block;*/
+    /*background-color: #88B04B;*/
     padding: 10px;
-    border: 1px solid #52703F;
+    /*border: 1px solid #52703F;*/
     border-radius: 20px;
-    margin: 20px;
+    /*margin: 0 20px 20px 20px;*/
     vertical-align: top;
 }
 
-table {
-    margin: auto;
-    border-collapse: separate;
-    border-spacing: 0 10px;
+.status-button {
+    left: 20%;
 }
 
-tr {
-    border-radius: 5px;
+.expand-button, .collapse-button {
+    left: 30%;
 }
 
-tbody tr:nth-child(2n+1) {
-    background-color: #88B04B;
-    border: 1px solid #52703F;
+.completed-task button {
+    color: #eeeeee;
 }
 
-tbody tr:nth-child(2n+1) button, tbody tr:nth-child(2n) button {
+.task.completed-task {
     background-color: #555555;
     color: #eeeeee;
 }
 
-tbody tr:nth-child(2n+1).completed-task {
-    background-color: #333333;
-    color: #eeeeee;
+.task li {
+    margin: 5px;
+    text-align: left;
 }
 
-tbody tr:nth-child(2n+1).completed-task button, tbody tr:nth-child(2n).completed-task button{
-    background-color: #B2E79F;
-    border: 1px solid #88B04B;
-    color: #555555;
-}
-
-tbody tr:nth-child(2n) {
-    background-color: #B2E79F;
-    border: 1px solid #88B04B;
-}
-
-tbody tr:nth-child(2n).completed-task {
-    background-color: #666666;
-    color: #eeeeee;
-}
-
-td {
-    padding: 5px 20px 5px 20px;
+.task select {
+    font-size: 14px;
+    padding: 5px 10px;
 }

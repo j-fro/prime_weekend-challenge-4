@@ -15,7 +15,7 @@ CREATE TABLE task (
     id SERIAL PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     complete BOOLEAN DEFAULT FALSE,
-    list_id INTEGER REFERENCES list(id)
+    list_id INTEGER REFERENCES list(id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE person_task (

@@ -27,6 +27,7 @@ router.get('/', function(req, res) {
             queryString += 'person.name AS person_name, task.list_id FROM task ';
             queryString += 'JOIN person_task ON task.id=person_task.task_id ';
             queryString += 'JOIN person ON person_task.person_id=person.id';
+            // queryString += 'ORDER BY task.complete, task.task_id';
             var query = client.query(queryString, function(err, result) {
                 if (err) {
                     console.log(err);
@@ -35,8 +36,9 @@ router.get('/', function(req, res) {
                 }
             });
             // Query tasks
-            queryString = 'SELECT * FROM task';
+            queryString = 'SELECT * FROM task ORDER BY complete, id';
             query = client.query(queryString, function(err, result) {
+                console.log(err);
                 tasks = result.rows;
             });
             // Query people
