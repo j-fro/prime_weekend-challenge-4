@@ -102,12 +102,13 @@ function addPerson() {
 }
 
 function addList() {
+    console.log('Adding a list:', $('#firstListNameIn').val() || $('#normalListNameIn').val());
     // POST object
     $.ajax({
         url: '/list',
         type: 'POST',
         data: {
-            name: $('.list-name-in').val()
+            name: $('#firstListNameIn').val() || $('#normalListNameIn').val()
         },
         success: function(response) {
             // Clear input
